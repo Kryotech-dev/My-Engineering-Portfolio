@@ -41,3 +41,25 @@ window.addEventListener("scroll", () => {
     alterStyles(isBackToTopRendered);
   }
 });
+const track = document.querySelector('.carousel-track');
+const items = Array.from(track.children);
+const nextButton = document.querySelector('.carousel-btn.next');
+const prevButton = document.querySelector('.carousel-btn.prev');
+
+let currentIndex = 0;
+
+function updateCarousel() {
+  const amountToMove = items[0].getBoundingClientRect().width;
+  track.style.transform = `translateX(-${currentIndex * amountToMove}px)`;
+}
+
+// Infinite looping
+nextButton.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % items.length;
+  updateCarousel();
+});
+
+prevButton.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + items.length) % items.length;
+  updateCarousel();
+});

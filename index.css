@@ -611,3 +611,153 @@ body:not(.user-is-tabbing) a:focus {
         padding: var(--gutter-medium) 0;
     } 
 }
+/* ===== LIVE 3D MODELS CAROUSEL ===== */
+
+.carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.carousel-track-container {
+  overflow: hidden;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  align-items: center;
+}
+
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Model Wrapper with Prompt === */
+.model-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.model-wrapper iframe {
+  width: 1180px;
+  height: 800px;
+  max-width: 100%;   /* scale down gracefully */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  display: block;
+}
+
+/* Prompt Styling */
+.model-prompt {
+  position: absolute;
+  bottom: 70px;                        /* moved higher so it avoids titles */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);       /* dark translucent background */
+  color: #fff;                          /* white text */
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: 2px solid #ff4b5c;            /* pink border */
+  border-radius: 25px;
+  animation: breathePrompt 3s ease-in-out 3 forwards, fadeOut 9s forwards;
+  pointer-events: none;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+/* Breathing animation for prompt (3 cycles, same as buttons) */
+@keyframes breathePrompt {
+  0%, 100% { transform: translateX(-50%) scale(0.7); }
+  50%      { transform: translateX(-50%) scale(1); }
+}
+
+/* Fade Out Animation after 3 breathing cycles */
+@keyframes fadeOut {
+  0%, 80% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+
+/* === Carousel Buttons === */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ff4b5c;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 3;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.12s ease;
+  animation: breatheBtn 3s infinite ease-in-out;
+}
+
+/* Breathing animation for buttons (continuous) */
+@keyframes breatheBtn {
+  0%, 100% { transform: translateY(-50%) scale(0.7); }
+  50%      { transform: translateY(-50%) scale(1); }
+}
+
+.carousel-btn:hover {
+  background: #e04353;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+
+/* ======================
+   Responsive adjustments
+   ====================== */
+
+/* Large laptops */
+@media (max-width: 1280px) {
+  .model-wrapper iframe { width: 1000px; height: 680px; }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .model-wrapper iframe { width: 900px; height: 610px; }
+  .carousel-btn { width: 44px; height: 44px; font-size: 1.8rem; }
+  .carousel-btn.prev { left: 14px; }
+  .carousel-btn.next { right: 14px; }
+  .model-prompt { font-size: 1.2rem; padding: 8px 14px; bottom: 60px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .model-wrapper iframe { width: 100%; height: 52vh; }
+  .carousel-btn { width: 40px; height: 40px; font-size: 1.6rem; }
+  .carousel-btn.prev { left: 10px; }
+  .carousel-btn.next { right: 10px; }
+  .model-prompt { font-size: 1rem; padding: 6px 12px; bottom: 50px; }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .model-wrapper iframe { height: 45vh; }
+  .carousel-btn { width: 36px; height: 36px; font-size: 1.3rem; }
+  .carousel-btn.prev { left: 8px; }
+  .carousel-btn.next { right: 8px; }
+  .model-prompt { font-size: 0.9rem; padding: 5px 10px; bottom: 40px; }
+}
